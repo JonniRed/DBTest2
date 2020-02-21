@@ -1,0 +1,219 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="TestDB2.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="TestDB2StoreContainer">
+    <EntitySet Name="SongsSet" EntityType="TestDB2.Store.SongsSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ArtistSet" EntityType="TestDB2.Store.ArtistSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="DistributorSet" EntityType="TestDB2.Store.DistributorSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ArtistDistributor" EntityType="TestDB2.Store.ArtistDistributor" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="ArtistSongs" Association="TestDB2.Store.ArtistSongs">
+      <End Role="Artist" EntitySet="ArtistSet" />
+      <End Role="Songs" EntitySet="SongsSet" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ArtistDistributor_Artist" Association="TestDB2.Store.FK_ArtistDistributor_Artist">
+      <End Role="Artist" EntitySet="ArtistSet" />
+      <End Role="ArtistDistributor" EntitySet="ArtistDistributor" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ArtistDistributor_Distributor" Association="TestDB2.Store.FK_ArtistDistributor_Distributor">
+      <End Role="Distributor" EntitySet="DistributorSet" />
+      <End Role="ArtistDistributor" EntitySet="ArtistDistributor" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="SongsSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Title" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Description" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Artist_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ArtistSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Birthday" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DistributorSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Adress" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ArtistDistributor">
+    <Key>
+      <PropertyRef Name="Artist_Id" />
+      <PropertyRef Name="Distributor_Id" />
+    </Key>
+    <Property Name="Artist_Id" Type="int" Nullable="false" />
+    <Property Name="Distributor_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="ArtistSongs">
+    <End Role="Artist" Type="TestDB2.Store.ArtistSet" Multiplicity="1" />
+    <End Role="Songs" Type="TestDB2.Store.SongsSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Artist">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Songs">
+        <PropertyRef Name="Artist_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ArtistDistributor_Artist">
+    <End Role="Artist" Type="TestDB2.Store.ArtistSet" Multiplicity="1" />
+    <End Role="ArtistDistributor" Type="TestDB2.Store.ArtistDistributor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Artist">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ArtistDistributor">
+        <PropertyRef Name="Artist_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ArtistDistributor_Distributor">
+    <End Role="ArtistDistributor" Type="TestDB2.Store.ArtistDistributor" Multiplicity="*" />
+    <End Role="Distributor" Type="TestDB2.Store.DistributorSet" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Distributor">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ArtistDistributor">
+        <PropertyRef Name="Distributor_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="TestDB2" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="TestDatabase2" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="SongsSet" EntityType="TestDB2.Songs" />
+          <EntitySet Name="ArtistSet" EntityType="TestDB2.Artist" />
+          <EntitySet Name="DistributorSet" EntityType="TestDB2.Distributor" />
+          <AssociationSet Name="ArtistSongs" Association="TestDB2.ArtistSongs">
+            <End Role="Artist" EntitySet="ArtistSet" />
+            <End Role="Songs" EntitySet="SongsSet" />
+          </AssociationSet>
+          <AssociationSet Name="ArtistDistributor" Association="TestDB2.ArtistDistributor">
+            <End Role="Artist" EntitySet="ArtistSet" />
+            <End Role="Distributor" EntitySet="DistributorSet" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Songs">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" annotation:StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="String" Nullable="true" Unicode="true" />
+          <Property Name="Description" Type="String" Unicode="true" />
+          <NavigationProperty Name="Artist" Relationship="TestDB2.ArtistSongs" FromRole="Songs" ToRole="Artist" />
+        </EntityType>
+        <EntityType Name="Artist">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" Unicode="true" />
+          <Property Name="Birthday" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="Songs" Relationship="TestDB2.ArtistSongs" FromRole="Artist" ToRole="Songs" />
+          <NavigationProperty Name="Distributor" Relationship="TestDB2.ArtistDistributor" FromRole="Artist" ToRole="Distributor" />
+        </EntityType>
+        <EntityType Name="Distributor">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Artist" Relationship="TestDB2.ArtistDistributor" FromRole="Distributor" ToRole="Artist" />
+          <Property Name="Name" Type="String" Nullable="false" Unicode="true" />
+          <Property Name="Adress" Type="String" Nullable="false" Unicode="true" />
+        </EntityType>
+        <Association Name="ArtistSongs">
+          <End Type="TestDB2.Artist" Role="Artist" Multiplicity="1" />
+          <End Type="TestDB2.Songs" Role="Songs" Multiplicity="*" />
+        </Association>
+        <Association Name="ArtistDistributor">
+          <End Type="TestDB2.Artist" Role="Artist" Multiplicity="*" />
+          <End Type="TestDB2.Distributor" Role="Distributor" Multiplicity="*" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="TestDB2StoreContainer" CdmEntityContainer="TestDatabase2">
+    <EntitySetMapping Name="SongsSet">
+      <EntityTypeMapping TypeName="IsTypeOf(TestDB2.Songs)">
+        <MappingFragment StoreEntitySet="SongsSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ArtistSet">
+      <EntityTypeMapping TypeName="IsTypeOf(TestDB2.Artist)">
+        <MappingFragment StoreEntitySet="ArtistSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Birthday" ColumnName="Birthday" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DistributorSet">
+      <EntityTypeMapping TypeName="IsTypeOf(TestDB2.Distributor)">
+        <MappingFragment StoreEntitySet="DistributorSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Adress" ColumnName="Adress" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="ArtistSongs" TypeName="TestDB2.ArtistSongs" StoreEntitySet="SongsSet">
+      <EndProperty Name="Artist">
+        <ScalarProperty Name="Id" ColumnName="Artist_Id" />
+      </EndProperty>
+      <EndProperty Name="Songs">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="ArtistDistributor" TypeName="TestDB2.ArtistDistributor" StoreEntitySet="ArtistDistributor">
+      <EndProperty Name="Artist">
+        <ScalarProperty Name="Id" ColumnName="Artist_Id" />
+      </EndProperty>
+      <EndProperty Name="Distributor">
+        <ScalarProperty Name="Id" ColumnName="Distributor_Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
